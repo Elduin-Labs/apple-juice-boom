@@ -2,9 +2,15 @@ package com.elduin.apple_juice_boom;
 
 import com.elduin.apple_juice_boom.net.BoomPayload;
 
+//? if >=26 {
+/*import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+*///? } else {
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+//? }
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.CreativeModeTab;
 
 /**
  * The handful of things Mojang and Fabric moved between the versions this mod supports. Keeping
@@ -21,6 +27,15 @@ public final class Compat {
 		/*PayloadTypeRegistry.clientboundPlay().register(BoomPayload.TYPE, BoomPayload.CODEC);
 		*///? } else {
 		PayloadTypeRegistry.playS2C().register(BoomPayload.TYPE, BoomPayload.CODEC);
+		//? }
+	}
+
+	/** Fabric renamed its creative-tab builder in 26. */
+	public static CreativeModeTab.Builder tabBuilder() {
+		//? if >=26 {
+		/*return FabricCreativeModeTab.builder();
+		*///? } else {
+		return FabricItemGroup.builder();
 		//? }
 	}
 

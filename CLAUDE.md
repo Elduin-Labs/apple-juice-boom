@@ -16,6 +16,33 @@ work with Elduin live in `~/.claude/CLAUDE.md`.
     primary version   1.21.11               (the one he plays)
     java              21 for 1.21.x, 25 for 26.x — Gradle picks this per version
 
+## How it works
+
+- `AppleJuiceBlock` is a small juice-box block with a `shaken` state. Shift +
+  right-click with an empty hand sets `shaken`, plays the TNT fuse sound and
+  schedules a tick 50 ticks later (`animateTick` sprays juice meanwhile).
+  A plain right-click just shows a hint above the hotbar.
+- When it goes off (`boom`): the block is removed, the server saves everything
+  and waits for the disk (`saveEverything(true, true, true)`), a power-12 TNT
+  explosion goes off, and a `BoomPayload` is sent to the player who shook it
+  (or the nearest player within 32 blocks).
+- **The crash is on purpose and real.** `client/Apocalypse` gets the payload,
+  spends 60 ticks spawning explosion emitters all around the player and
+  shaking the camera, then calls `Minecraft.delayCrash` with a
+  `TooMuchAppleJuiceException`. `delayCrash` exits without an emergency save,
+  so in single player the explosion itself usually isn't kept — the save just
+  before it is. On a dedicated server only the shaker's game crashes; the
+  server keeps running and keeps the crater.
+- Crafting: apple + sugar + glass bottle (shapeless). It has its own creative
+  tab, "Apple Juice Bomb", and is also in Food & Drinks.
+- Textures and the icon are drawn by `tools/textures.py` and `tools/icon.py`
+  (no Mojang art). Edit those and re-run; don't hand-edit the PNGs. The block
+  model only uses part of each 16x16 texture — the uv boxes are listed at the
+  top of `textures.py`.
+- Version differences live in `Compat.java` (payload registry rename in 26.2,
+  creative tab builder and action-bar message in 26) and
+  `FabricEventSubscriber` (`ItemGroupEvents` → `CreativeModeTabEvents`).
+
 The mod id is baked into save files. Once a world has been played with this mod,
 **changing the mod id breaks that world.** Rename the display name freely;
 never rename the mod id.

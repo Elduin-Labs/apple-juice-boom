@@ -1,15 +1,19 @@
 package com.elduin.apple_juice_boom.block;
 
 import com.elduin.apple_juice_boom.AppleJuiceBoom;
+import com.elduin.apple_juice_boom.Compat;
 
 import java.util.function.Function;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -23,6 +27,15 @@ public final class ModBlocks {
 					.noOcclusion());
 
 	public static final Item APPLE_JUICE_ITEM = registerBlockItem("apple_juice", APPLE_JUICE);
+
+	/** Its own creative tab: "Apple Juice Bomb". */
+	public static final CreativeModeTab TAB = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
+			ResourceKey.create(Registries.CREATIVE_MODE_TAB, AppleJuiceBoom.id("apple_juice_bomb")),
+			Compat.tabBuilder()
+					.icon(() -> new ItemStack(APPLE_JUICE_ITEM))
+					.title(Component.translatable("itemGroup.apple_juice_boom"))
+					.displayItems((params, output) -> output.accept(APPLE_JUICE_ITEM))
+					.build());
 
 	private ModBlocks() {
 	}

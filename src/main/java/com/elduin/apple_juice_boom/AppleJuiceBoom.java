@@ -1,5 +1,7 @@
 package com.elduin.apple_juice_boom;
 
+import com.elduin.apple_juice_boom.block.ModBlocks;
+import com.elduin.apple_juice_boom.client.Apocalypse;
 import com.elduin.apple_juice_boom.platform.Platform;
 
 import net.minecraft.resources.Identifier;
@@ -21,11 +23,14 @@ public class AppleJuiceBoom {
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, AppleJuiceBoom.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
+		ModBlocks.init();
+		Compat.registerPayloads();
 	}
 
 	public static void onInitializeClient() {
 		LOGGER.info("Initializing {} Client on {}", MOD_ID, AppleJuiceBoom.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
+		Apocalypse.register();
 	}
 
 	static Platform xplat() {

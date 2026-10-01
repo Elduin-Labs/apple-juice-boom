@@ -2,21 +2,25 @@ package com.elduin.apple_juice_boom.platform.fabric;
 
 //? fabric {
 
-import com.elduin.apple_juice_boom.event.ExampleEventHandler; // sample_content
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents; // sample_content
-import net.minecraft.server.level.ServerPlayer; // sample_content
+import com.elduin.apple_juice_boom.block.ModBlocks;
+import net.minecraft.world.item.CreativeModeTabs;
+//? if >=26 {
+/*import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+*///? } else {
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+//? }
 
 public class FabricEventSubscriber {
 
 	public static void registerEvents() {
-		//? != 1.19.2 {
-		// sample_content
-		ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damageTaken, blocked) -> { // sample_content
-			if (entity instanceof ServerPlayer && damageTaken > 0) { // sample_content
-				ExampleEventHandler.onPlayerHurt((ServerPlayer) entity); // sample_content
-			} // sample_content
-		}); // sample_content
-		//?}
+		// Fabric API renamed "item groups" to "creative mode tabs" in 26.
+		//? if >=26 {
+		/*CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+				.register(output -> output.accept(ModBlocks.APPLE_JUICE_ITEM));
+		*///? } else {
+		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+				.register(entries -> entries.accept(ModBlocks.APPLE_JUICE_ITEM));
+		//? }
 	}
 }
 //?}

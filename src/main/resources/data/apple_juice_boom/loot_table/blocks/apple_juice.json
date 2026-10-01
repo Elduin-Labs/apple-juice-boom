@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "conditions": [ { "condition": "minecraft:survives_explosion" } ],
+      "entries": [ { "type": "minecraft:item", "name": "apple_juice_boom:apple_juice" } ]
+    }
+  ],
+  "random_sequence": "apple_juice_boom:blocks/apple_juice"
+}

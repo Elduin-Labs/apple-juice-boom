@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [ "minecraft:apple", "minecraft:sugar", "minecraft:glass_bottle" ],
+  "result": { "id": "apple_juice_boom:apple_juice", "count": 1 }
+}
